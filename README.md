@@ -6,16 +6,22 @@
 `npm run dev` command to start the application in development phase.
 
 > The application mode is set in the package.json for both production, start & test modes.
-> import the required dependencies & dev-dependencies from `npm install <package>`.\n
+
+> import the required dependencies & dev-dependencies from `npm install <package>`.
+
 > set up the required scripts for development & production modes.
 
 ---
 
 > set up the server with application configuration, env config, template-engine, application listeners.
+
 > setup a db in './config/' for the database configuration & connect it to the server.
 
 > create views directory for template literals & organise directory layout.
+
 > create routes directory for api routes & create routes for top-level routes [dashboard, login/landing] in 'index.js'.
+
+---
 
 > use [materialize](https://materializecss.com/getting-started.html) to add design to the webpage.
 > use [font-awesome](https://cdnjs.com/libraries/font-awesome) to add stylish fonts to the webpages in api.
