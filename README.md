@@ -5,7 +5,7 @@
 
 `npm run dev` command to start the application in development phase.
 
-> The application mode is set in the package.json for both production, start & test modes.
+> The application mode is set in the _package.json_ for both production, start & test modes.
 
 > import the required dependencies & dev-dependencies from `npm install <package>`.
 
@@ -15,11 +15,11 @@
 
 > set up the server with application configuration, env config, template-engine, application listeners.
 
-> setup a db in './config/' for the database configuration & connect it to the server.
+> setup a db in _./config/_ for the database configuration & connect it to the server.
 
 > create views directory for template literals & organise directory layout.
 
-> create routes directory for api routes & create routes for top-level routes [dashboard, login/landing] in 'index.js'.
+> create routes directory for api routes & create routes for top-level routes [dashboard, login/landing] in _index.js_.
 
 ---
 
