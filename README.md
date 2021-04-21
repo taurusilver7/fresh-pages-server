@@ -5,9 +5,8 @@
 
 `npm run dev` command to start the application in development phase.
 
-> The application mode is set in the _package.json_ for both production, start & test modes.
-
-> import the required dependencies & dev-dependencies from `npm install <package>`.
+The application mode is set in the _package.json_ for both production, start & test modes.
+import the required dependencies & dev-dependencies from `npm install <package>`.
 
 > set up the required scripts for development & production modes.
 
