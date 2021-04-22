@@ -17,7 +17,7 @@ module.exports = function (passport) {
         const newUser = {
           googleId: profile.id,
           displayName: profile.displayName,
-          firstName: profile.name.givenName,
+          firstName: profile.name.given,
           lastName: profile.name.familyName,
           image: profile.photos[0].value,
         };
@@ -25,7 +25,7 @@ module.exports = function (passport) {
         try {
           let user = await User.findOne({ googleId: profile.id });
           if (user) {
-            callbck(null, user);
+            calbck(null, user);
           } else {
             user = await User.create(newUser);
             calbck(null, user);
