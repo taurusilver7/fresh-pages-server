@@ -36,6 +36,8 @@
 
 ---
 
+#### Authenticate Application
+
 - create a project for the application in google-cloud-console & enable api services for the application. add a redirect url to working localhost now & hosted homepage in future to enable google oauth services.
 - ---> Copy the **client id & client secret** for enabling the google+ services
 
@@ -63,3 +65,14 @@
 
 - to avoid a user/non-user/guest to redirect to other pages through url's, a middleware to authorize the user/guest priviliages is created in _/controller/auth.js_.
 - The user/ guest priviliges are tightly bound. But the user session expires with every refresh/ app changes. To avoid this, the session is stored in database with **mongo-connect** package
+- The package used for session storing is `connect-mongo@3` with `express-session`. The store location is the current mongoose.connection.
+
+---
+
+### Create Stories for the App
+
+- create a model for the story in the user dashboard.
+- In the index routes, for the dashboard, restrict the find to _user.id_ from the req & enable `lean()` to make the document returned from queries as plain js objects but not mongoose documents.
+
+- create a 404 error & 500 internal server error templates for error rendering in the dashboard route.
+- The dashboard table for stories is created in /dashboard.hbs
