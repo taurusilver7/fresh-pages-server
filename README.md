@@ -76,3 +76,9 @@
 
 - create a 404 error & 500 internal server error templates for error rendering in the dashboard route.
 - The dashboard table for stories is created in /dashboard.hbs
+- Add a stroy add button in partials & add it to the main template.
+- Create a _/stories_ dir in views to create different types of templates for creating, editing stories. Add their corresponding routes to the _/router_.
+
+---
+
+-
