@@ -4,6 +4,8 @@
 > The back-end api function for the story book application.
 > MVC architecture is applied for the api building.
 
+- [Go to](https://github.com/taurusilver7/fresh-pages-client) the front-end build of the CRUD application.
+
 `npm run dev` command to start the application in development phase.
 
 - The application mode is set in the _package.json_ for both production, start & test modes.
@@ -42,7 +44,7 @@
 - create a _googleStrategy_ using passport js for 2 specified login routes for the api.
 - create passport strategy using google strategy for success & error routes & re-directs.
 - The passport configuration is created in _/config_ dir & imported to server.
-- create passport middleware with **initialize & session** from passport[passport-session only works with express sessions initialized above]()
+- create passport middleware with **initialize & session** from passport [passport-session only works with express sessions initialized above]
 
 ---
 
@@ -51,3 +53,13 @@
 
 > In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request. If authentication succeeds, a session will be established and maintained via a cookie set in the user's browser.
 > Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session. In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
+
+- The passport strategy allows the user to login with google+ authentication using passport-js
+- The login & logout routes are created in _/routes/auth.js_.
+- A partial view template to insert into other template (main.hbs) to get a navbar for logout button.
+- A script for the side navbar operation is created at **main.hbs**
+
+---
+
+- to avoid a user/non-user/guest to redirect to other pages through url's, a middleware to authorize the user/guest priviliages is created in _/controller/auth.js_.
+- The user/ guest priviliges are tightly bound. But the user session expires with every refresh/ app changes. To avoid this, the session is stored in database with **mongo-connect** package
