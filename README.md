@@ -87,4 +87,10 @@
 - cdn for ck editor v4.16.0 is [here](https://cdnjs.com/libraries/ckeditor)
 
 - To post the data to database, a post req is created in /stories route with body-parsers enabled in server, for webpage rendering.
-- format the date in each story in the dashboard.
+- format the date in each story in the dashboard, using a helper to wrap around date to format it. Register the helper with handlebars in server to use it in templates
+- The moment format required (used) in app is 'MMMM Do YYYY, h:mm:ss a'
+
+---
+
+- create a public stories end point to the api. create a template in _/stories/index.hb_s for the get route in _/routes/stories\_.
+- To refactor the webpage, some helpers to strip the p-tags, truncate the text are created.
