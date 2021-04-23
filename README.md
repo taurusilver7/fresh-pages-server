@@ -6,6 +6,8 @@
 
 - [Go to](https://github.com/taurusilver7/fresh-pages-client) the front-end build of the CRUD application.
 
+### Setup work environment.
+
 `npm run dev` command to start the application in development phase.
 
 - The application mode is set in the _package.json_ for both production, start & test modes.
@@ -92,9 +94,16 @@
 
 ---
 
+### Adding & Editing Stories
+
 - create a public stories end point to the api. create a template in _/stories/index.hb_s for the get route in _/routes/stories\_.
 - To refactor the webpage, some helpers to strip the p-tags, truncate the text are created.
 - Register the helper functions in server to use them in templates.
 
+---
+
 - A helper function editIcon to intiate a story editing is created along with the template for the edit button.
-- create a route for editing & template for the edit web-page
+- create a route for editing & template for the edit web-page >> _/stories/edit.hbs_ & _/routes/stories_
+- The edit tempate is similar to add template with already values of the story ready to be edited >> `value="{{story.title}}"` >> `<textarea>{{story.body}}</textarea>`
+- To edit the story status in the database, they are wrapped in a select helper function >>
+  `{{#select story.status}}` with their status as selectors.
