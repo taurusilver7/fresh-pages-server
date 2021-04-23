@@ -78,7 +78,13 @@
 - The dashboard table for stories is created in /dashboard.hbs
 - Add a stroy add button in partials & add it to the main template.
 - Create a _/stories_ dir in views to create different types of templates for creating, editing stories. Add their corresponding routes to the _/router_.
+- Link the stories route to the server. Add the script for status selection in **add.hbs** template to the **main.hbs**
 
 ---
 
--
+- For the textarea in the /stories/add route to be converted into `wysiwyg editor`, **ck editor** is imported as script.
+- more about wysiwyg editor is [here](https://froala.com/wysiwyg-editor/)
+- cdn for ck editor v4.16.0 is [here](https://cdnjs.com/libraries/ckeditor)
+
+- To post the data to database, a post req is created in /stories route with body-parsers enabled in server, for webpage rendering.
+- format the date in each story in the dashboard.
