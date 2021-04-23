@@ -30,13 +30,13 @@ app.use(express.json());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 // handlebars helpers
-const { formatDate } = require("./utils/hbs");
+const { formatDate, stripTags, truncate, editIcon } = require("./utils/hbs");
 
 // templates- handlebars
 app.engine(
   ".hbs",
   exphnds({
-    helpers: { formatDate, stripTags, truncate },
+    helpers: { formatDate, stripTags, truncate, editIcon },
     defaultLayout: "main",
     extname: ".hbs",
   })
@@ -55,6 +55,12 @@ app.use(
 // passport middlewares
 app.use(passport.initialize());
 app.use(passport.session());
+
+// set global variables for /stories/index.hbs to use user out of the loop
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null;
+  next();
+});
 
 // config static folder [directory]
 app.use(express.static(path.join(__dirname, "public")));
