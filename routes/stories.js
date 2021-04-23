@@ -38,11 +38,24 @@ router.get("/", ensureAuth, async (req, res) => {
       .populate("user")
       .sort({ createdAt: "desc" })
       .lean();
-    res.render("stories/index", {stories});
+    res.render("stories/index", { stories });
   } catch (err) {
     console.error(err);
     res.render("error/500");
   }
+});
+
+/*
+@desc    Show edit page
+@route  GET /stories/edit/:id
+*/
+router.get("/edit/:id", ensureAuth, async (req, res) => {
+  const story = await Story.findOne({ _id: req.params.id }).lean();
+
+  if (!story) res.render("error/404");
+
+  if (story.user !== req.user.id) res.redirect("/stories");
+  res.render("stories/edit", { story });
 });
 
 module.exports = router;
