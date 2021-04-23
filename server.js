@@ -29,8 +29,14 @@ app.use(express.json());
 // req log data
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
+// handlebars helpers
+const { formatDate } = require("./utils/hbs");
+
 // templates- handlebars
-app.engine(".hbs", exphnds({ defaultLayout: "main", extname: ".hbs" }));
+app.engine(
+  ".hbs",
+  exphnds({ helpers: { formatDate }, defaultLayout: "main", extname: ".hbs" })
+);
 app.set("view engine", ".hbs");
 
 // express sessions
