@@ -94,3 +94,4 @@
 
 - create a public stories end point to the api. create a template in _/stories/index.hb_s for the get route in _/routes/stories\_.
 - To refactor the webpage, some helpers to strip the p-tags, truncate the text are created.
+- Register the helper functions in server to use them in templates.
