@@ -35,7 +35,11 @@ const { formatDate } = require("./utils/hbs");
 // templates- handlebars
 app.engine(
   ".hbs",
-  exphnds({ helpers: { formatDate }, defaultLayout: "main", extname: ".hbs" })
+  exphnds({
+    helpers: { formatDate, stripTags, truncate },
+    defaultLayout: "main",
+    extname: ".hbs",
+  })
 );
 app.set("view engine", ".hbs");
 
