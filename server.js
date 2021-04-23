@@ -22,6 +22,10 @@ connectDB();
 //^^^^^^ app config  ^^^^^//
 const app = express();
 
+// body-parser config
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // req log data
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
