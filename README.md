@@ -107,3 +107,6 @@
 - The edit tempate is similar to add template with already values of the story ready to be edited >> `value="{{story.title}}"` >> `<textarea>{{story.body}}</textarea>`
 - To edit the story status in the database, they are wrapped in a select helper function >>
   `{{#select story.status}}` with their status as selectors.
+
+- the edit function is a PUT request, which simply cannot be added to form>method. The **method-override** package is imported to add a hidden input(desired method=PUT/PATCH/DEL) to the html form(default method=POST) as a middleware.
+  `<input type="hidden" name="_method" value=""PUT">`
