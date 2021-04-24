@@ -11,3 +11,16 @@ p {
 .fa-small {
   font-size: 16px;
 }
+
+.btn-float {
+  float: left;
+  margin-right: 10px;
+}
+
+.btn-floating {
+  transition: 0.3s ease-in;
+}
+
+.btn-floating:hover {
+  transform: scale(1.1);
+}
