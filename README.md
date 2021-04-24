@@ -110,3 +110,7 @@
 
 - the edit function is a PUT request, which simply cannot be added to form>method. The **method-override** package is imported to add a hidden input(desired method=PUT/PATCH/DEL) to the html form(default method=POST) as a middleware.
   `<input type="hidden" name="_method" value=""PUT">`
+
+---
+
+- create a button that uses method-override to delete a story from the dashboard.
