@@ -24,3 +24,7 @@ p {
 .btn-floating:hover {
   transform: scale(1.1);
 }
+
+.img-small {
+  width: 180px;
+}
