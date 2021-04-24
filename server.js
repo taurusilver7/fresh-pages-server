@@ -4,6 +4,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const exphnds = require("express-handlebars");
+const methodOverride = require("method-override");
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -30,13 +31,19 @@ app.use(express.json());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 // handlebars helpers
-const { formatDate, stripTags, truncate, editIcon } = require("./utils/hbs");
+const {
+  formatDate,
+  stripTags,
+  truncate,
+  editIcon,
+  select,
+} = require("./utils/hbs");
 
 // templates- handlebars
 app.engine(
   ".hbs",
   exphnds({
-    helpers: { formatDate, stripTags, truncate, editIcon },
+    helpers: { formatDate, stripTags, truncate, editIcon, select },
     defaultLayout: "main",
     extname: ".hbs",
   })
