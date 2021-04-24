@@ -4,8 +4,6 @@
 > The back-end api function for the story book application.
 > MVC architecture is applied for the api building.
 
-- [Go to](https://github.com/taurusilver7/fresh-pages-client) the front-end build of the CRUD application.
-
 ### Setup work environment.
 
 `npm run dev` command to start the application in development phase.
