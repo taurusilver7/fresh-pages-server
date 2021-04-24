@@ -52,6 +52,8 @@
 
 ---
 
+### Mongoose models
+
 - a _/models_ directory to hold the db models using mongoose is created to store the models in passport strategy.
 - A mongoose model with a schema to get the user info is created in _/models/User.js_
 
@@ -114,3 +116,7 @@
 ---
 
 - create a button that uses method-override to delete a story from the dashboard.
+- create a delete req in /routes/stories with method _model.remove()_
+
+- create a get request for single story & create a template for it. >> _/stories/show.hbs_
+- create a get request for user stories only & template used for web-page is _/stories/index.hbs_
