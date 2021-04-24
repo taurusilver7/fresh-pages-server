@@ -1,4 +1,4 @@
-o; // a helper to wrap around date to format it.
+// a helper to wrap around date to format it.
 // register the helper with handlebars in server to use it in templates (dashboard.hbs)
 const moment = require("moment");
 
@@ -39,7 +39,7 @@ module.exports = {
         '$& selected="selected"'
       )
       .replace(
-        new Regexp(">" + selected + "</option>"),
+        new RegExp(">" + selected + "</option>"),
         ' selected="selected"$&'
       );
   },
