@@ -28,3 +28,9 @@ p {
 .img-small {
   width: 180px;
 }
+
+.img-title {
+  margin: 0;
+  padding: 0;
+  width: 150px;
+}
