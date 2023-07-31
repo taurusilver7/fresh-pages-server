@@ -120,3 +120,7 @@
 
 -  create a get request for single story & create a template for it. >> _/stories/show.hbs_
 -  create a get request for user stories only & template used for web-page is _/stories/index.hbs_
+
+# Deployment
+
+Deploy the server application on [render]() with custom parameters and settings.
