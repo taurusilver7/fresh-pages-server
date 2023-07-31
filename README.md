@@ -6,6 +6,8 @@
 > The back-end api function for the story book application.
 > MVC architecture in api building.
 
+![fresh-pages](https://i.ibb.co/pbBmmty/fresh-pages.png)
+
 ### Setup work environment.
 
 `npm run dev` command to start the application in development phase.
@@ -123,4 +125,6 @@
 
 # Deployment
 
-Deploy the server application on [render]() with custom parameters and settings.
+Deploy the server application on [render](https://render.com) with custom parameters and settings.
+
+Check the deployed [fresh-pages](http://fresh-pages.onrender.com/) here and create your own stories.
