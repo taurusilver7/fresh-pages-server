@@ -1,36 +1,44 @@
 p {
-  margin: 10px 0 !important;
+	margin: 10px 0 !important;
+}
+
+.container {
+	width: 85vw;
 }
 
 .login-container {
-  width: 400px;
-  margin-top: 50px;
-  text-align: center;
+	width: 400px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+.card-container {
+	padding: 15px;
 }
 
 .fa-small {
-  font-size: 16px;
+	font-size: 16px;
 }
 
 .btn-float {
-  float: left;
-  margin-right: 10px;
+	float: left;
+	margin-right: 10px;
 }
 
 .btn-floating {
-  transition: 0.3s ease-in;
+	transition: 0.3s ease-in;
 }
 
 .btn-floating:hover {
-  transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .img-small {
-  width: 180px;
+	width: 180px;
 }
 
 .img-title {
-  margin: 0;
-  padding: 0;
-  width: 150px;
+	margin: 0;
+	padding: 0;
+	width: 150px;
 }
