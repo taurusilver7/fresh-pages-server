@@ -1,3 +1,5 @@
+{{!-- Stories Index Page --}}
+
 <h2>Stories</h2>
 <div class="row">
     {{#each stories}}
@@ -10,10 +12,10 @@
 
                 <div class="card-content center-align">
                     <h5>{{title}}</h5>
-                    <p>{{stripTags (truncate body 180)}}</p>
+                    <p>{{stripTags (truncate body 120)}}</p>
                     <br>
                     <div class="chip">
-                        <img src={{user.image}} alt="">
+                        <img src={{user.image}} alt="author">
                         <a href="/stories/user/{{user._id}}">{{user.firstName}}</a>
                     </div>
                 </div>
