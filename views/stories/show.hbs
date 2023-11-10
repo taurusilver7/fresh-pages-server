@@ -1,8 +1,8 @@
-{{! Story board }}
+{{! Induvidual Story board }}
 <div class="row">
-  <div class="col s12 m9">
     <h3>{{story.title}}<small>
         {{{editIcon story.user user story._id false}}}</small></h3>
+  <div class="col s12 m10">
     <div class="card story">
       <div class="card-container">
         <span class="card-title">{{formatDate
@@ -16,9 +16,9 @@
 
   {{! Author information }}
 
-  <div class="col s12 m3">
+  <div class="col s12 m2">
     <div class="card center-align">
-      <div class="card-content">
+      <div class="card-container">
         <span class="card-title">{{story.user.displayName}}</span>
         <img
           src="{{story.user.image}}"
