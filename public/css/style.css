@@ -3,7 +3,9 @@ p {
 }
 
 .container {
-	width: 85vw;
+	width: 87vw;
+	/* height: screen; */
+	position: sticky;
 }
 
 .login-container {
@@ -41,6 +43,7 @@ p {
 	margin: 0;
 	padding: 0;
 	width: 150px;
+	/* height: auto; */
 }
 
 ::-webkit-scrollbar {
