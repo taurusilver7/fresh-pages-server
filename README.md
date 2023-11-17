@@ -20,24 +20,21 @@ npm run dev
 
 -  The application modes are set in the _package.json_ for test, development & production modes.
    <br />
--  import the required dependencies & dev-dependencies with `npm install <package>`.
+-  import the required dependencies & dev-dependencies with `npm install <package>` & `npm install <package> --save-dev`.
    <br />
 -  set up the required scripts for development & production modes.
 
 ---
 
--  set up the server with application configuration, env config, template-engine, application listeners.
--  setup a db in _./config/_ for the database configuration & connect it to the server.
-
--  create views directory for template literals & organise directory layout.
-
--  create routes directory for api routes & create routes for top-level routes [dashboard, login/landing] in **index.js**.
+Set up the server with application configuration, env config, template-engine, application listeners.
+Setup a db in _./config/_ for the database configuration & connect it to the server.
+Create views directory for template literals & organise directory layout.
+Create routes directory for api routes & create routes for top-level routes [dashboard, login/landing] in **index.js**.
 
 ---
 
-> use [materialize](https://materializecss.com/getting-started.html) to add design to the webpage.
-> <br />
-> use [font-awesome](https://cdnjs.com/libraries/font-awesome) to add stylish fonts to the webpages in api.
+-  Use [materialize](https://materializecss.com/getting-started.html) to add design to the webpage.
+-  Use [font-awesome](https://cdnjs.com/libraries/font-awesome) to add stylish fonts to the webpages in api.
 
 ---
 
@@ -46,7 +43,7 @@ npm run dev
 
 ---
 
-#### Authenticate Application
+### Authenticate Application
 
 -  create a project for the application in google-cloud-console & enable api services for the application. add a redirect url to working localhost now & hosted homepage in future to enable google oauth services.
 -  ---> Copy the **client id & client secret** for enabling the google+ services
