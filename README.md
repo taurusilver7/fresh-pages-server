@@ -1,20 +1,26 @@
-# StoryBook
+# Fresh Pages
 
-> A storage Application Back-end API.
+> A Fully Server-Side Writing Platform
 
-> A MERN CRUD Application API.
-> The back-end api function for the story book application.
-> MVC architecture in api building.
+![fresh-pages](https://i.ibb.co/SxLMzBM/fresh-pages.png)
 
-![fresh-pages](https://i.ibb.co/pbBmmty/fresh-pages.png)
+> A MERN CRUD Application API & Client.
+> A fully server-side function for the story book application.
+> MVC architecture in API building.
 
 ### Setup work environment.
 
-`npm run dev` command to start the application in development phase.
+Start the application in a local development server.
 
--  The application mode is set in the _package.json_ for both production, start & test modes.
+```bash
+npm init -y
+# and
+npm run dev
+```
+
+-  The application modes are set in the _package.json_ for test, development & production modes.
    <br />
--  import the required dependencies & dev-dependencies from `npm install <package>`.
+-  import the required dependencies & dev-dependencies with `npm install <package>`.
    <br />
 -  set up the required scripts for development & production modes.
 
