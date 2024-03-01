@@ -2,11 +2,11 @@
 
 > A Fully Server-Side Writing Platform
 
-![fresh-pages](https://i.ibb.co/SxLMzBM/fresh-pages.png)
-
 > A MERN CRUD Application API & Client.
 > A fully server-side function for the story book application.
 > MVC architecture in API building.
+
+![fresh-pages](https://i.ibb.co/SxLMzBM/fresh-pages.png)
 
 ### Setup work environment.
 
