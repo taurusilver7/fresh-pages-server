@@ -1,37 +1,37 @@
 {{! Induvidual Story board }}
 <div class="row">
-    <h3>{{story.title}}<small>
-        {{{editIcon story.user user story._id false}}}</small></h3>
-  <div class="col s12 m10">
-    <div class="card story">
-      <div class="card-container">
-        <span class="card-title">{{formatDate
-            date
-            "MMMM Do YYYY, hh:mm:ss a"
-          }}</span>
-        {{{story.body}}}
-      </div>
-    </div>
-  </div>
+	<h3>{{story.title}}<small>
+			{{{editIcon story.user user story._id false}}}</small></h3>
+	<div class="col s12 m10">
+		<div class="card story">
+			<div class="card-container">
+				<span class="card-title">{{formatDate
+						date
+						"MMMM Do YYYY, hh:mm a"
+					}}</span>
+				{{{story.body}}}
+			</div>
+		</div>
+	</div>
 
-  {{! Author information }}
+	{{! Author information }}
 
-  <div class="col s12 m2">
-    <div class="card center-align">
-      <div class="card-container">
-        <span class="card-title">{{story.user.displayName}}</span>
-        <img
-          src="{{story.user.image}}"
-          alt="profile-pic"
-          class="circle responsive-img img-small"
-        />
-      </div>
-      <div class="card-action">
-        <p>
-          <a href="/stories/user/{{story.user._id}}">More From
-            {{story.user.lastName}}</a>
-        </p>
-      </div>
-    </div>
-  </div>
+	<div class="col s12 m2">
+		<div class="card center-align">
+			<div class="card-container">
+				<span class="card-title">{{story.user.displayName}}</span>
+				<img
+					src="{{story.user.image}}"
+					alt="profile-pic"
+					class="circle responsive-img img-small"
+				/>
+			</div>
+			<div class="card-action">
+				<p>
+					<a href="/stories/user/{{story.user._id}}">More From
+						{{story.user.lastName}}</a>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
