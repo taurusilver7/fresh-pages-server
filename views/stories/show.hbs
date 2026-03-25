@@ -1,37 +1,220 @@
-{{! Induvidual Story board }}
-<div class="row">
-	<h3>{{story.title}}<small>
-			{{{editIcon story.user user story._id false}}}</small></h3>
-	<div class="col s12 m10">
-		<div class="card story">
-			<div class="card-container">
-				<span class="card-title">{{formatDate
-						date
-						"MMMM Do YYYY, hh:mm a"
-					}}</span>
-				{{{story.body}}}
-			</div>
-		</div>
-	</div>
+{{! Individual Story board }}
+<div class="story-show-wrapper">
 
-	{{! Author information }}
+  {{! ── METADATA BANNER ── }}
+<div class="story-banner">
+  <div class="story-banner-inner">
+    <p class="story-breadcrumb">
+      <a href="/stories">Stories</a>
+      <i class="fas fa-chevron-right fa-xs"></i>
+      Fiction
+    </p>
+    <div class="story-meta-block">
+      <div class="story-meta-text">
+        <h4 class="story-title">
+          {{story.title}}
+          {{{editIcon story.user user story._id false}}}
+        </h4>
+        <p class="story-author-line">
+          By: <a href="/stories/user/{{story.user._id}}">{{story.user.displayName}}</a>
+        </p>
+        {{#if story.description}}
+          <p class="story-description">{{story.description}}</p>
+        {{/if}}
+        <p class="story-meta-inline">
+          <span>Chapters: <strong>{{totalChapters}}</strong></span>
+          <span class="meta-divider">·</span>
+          <span>Status: <strong>{{story.status}}</strong></span>
+          <span class="meta-divider">·</span>
+          <span>Published: <strong>{{formatDate story.createdAt "MMM Do YYYY"}}</strong></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-	<div class="col s12 m2">
-		<div class="card center-align">
-			<div class="card-container">
-				<span class="card-title">{{story.user.displayName}}</span>
-				<img
-					src="{{story.user.image}}"
-					alt="profile-pic"
-					class="circle responsive-img img-small"
-				/>
-			</div>
-			<div class="card-action">
-				<p>
-					<a href="/stories/user/{{story.user._id}}">More From
-						{{story.user.lastName}}</a>
-				</p>
-			</div>
-		</div>
-	</div>
+{{! ── CHAPTER NAV BAR ── }}
+<div class="chapter-nav-bar">
+  <div class="chapter-nav-inner">
+
+    {{! Left: Reader formatters }}
+    <div class="reader-controls">
+      <button class="reader-btn" id="font-decrease" title="Decrease font size">A-</button>
+      <button class="reader-btn" id="font-reset" title="Reset font size">A</button>
+      <button class="reader-btn" id="font-increase" title="Increase font size">A+</button>
+      <div class="reader-divider"></div>
+      <button class="reader-btn" id="spacing-toggle" title="Toggle line spacing">
+        <i class="fas fa-bars"></i>
+      </button>
+      <button class="reader-btn" id="font-toggle" title="Toggle font family">Tl</button>
+      <button class="reader-btn" id="theme-toggle" title="Toggle dark mode">&#9684;</button>
+    </div>
+
+    {{! Right: Chapter selector + pagination }}
+    <div class="chapter-jump-btns">
+      {{#if prevChapter}}
+        <a href="/stories/{{story._id}}?chapter={{prevChapter}}" class="jump-btn">
+          <i class="fas fa-chevron-left"></i> Prev
+        </a>
+      {{else}}
+        <span class="jump-btn disabled">
+          <i class="fas fa-chevron-left"></i> Prev
+        </span>
+      {{/if}}
+
+      <form method="GET" action="/stories/{{story._id}}" id="chapter-select-form">
+        <div class="chapter-select-wrapper">
+          <select name="chapter" id="chapter-select" onchange="this.form.submit()">
+            {{!-- {{{chapterOptions story.chapters currentChapter}}} --}}
+          </select>
+          <i class="fas fa-chevron-down select-icon"></i>
+        </div>
+      </form>
+
+      {{#if nextChapter}}
+        <a href="/stories/{{story._id}}?chapter={{nextChapter}}" class="jump-btn">
+          Next <i class="fas fa-chevron-right"></i>
+        </a>
+      {{else}}
+        <span class="jump-btn disabled">
+          Next <i class="fas fa-chevron-right"></i>
+        </span>
+      {{/if}}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    const body = document.body;
+    const chapterBody = document.querySelector('.chapter-body');
+    const STORAGE_KEY = 'fp_reader_prefs';
+
+    // ── Defaults
+    const defaults = {
+      fontSize: 1.08,
+      spacing: 1.95,
+      fontFamily: 'georgia',
+      darkMode: false
+    };
+
+    // ── Load persisted prefs or fall back to defaults
+    function loadPrefs() {
+      try {
+        return Object.assign({}, defaults, JSON.parse(localStorage.getItem(STORAGE_KEY)));
+      } catch (e) {
+        return Object.assign({}, defaults);
+      }
+    }
+
+    // ── Save prefs to localStorage
+    function savePrefs(prefs) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    }
+
+    // ── Apply prefs to DOM
+   function applyPrefs(prefs) {
+  chapterBody.style.fontSize = prefs.fontSize + 'rem';
+  chapterBody.style.lineHeight = prefs.spacing;
+  chapterBody.style.fontFamily = prefs.fontFamily === 'georgia'
+    ? "'Georgia', serif"
+    : "'Helvetica Neue', Arial, sans-serif";
+
+  const targets = [
+    document.querySelector('.chapter-content-wrapper'),
+    document.querySelector('.chapter-pagination'),
+    document.querySelector('.story-show-wrapper')
+  ];
+
+  if (prefs.darkMode) {
+    body.classList.add('reader-dark');
+    targets.forEach(el => { if (el) el.classList.add('reader-dark'); });
+    document.getElementById('theme-toggle').style.color = '#80cbc4';
+  } else {
+    body.classList.remove('reader-dark');
+    targets.forEach(el => { if (el) el.classList.remove('reader-dark'); });
+    document.getElementById('theme-toggle').style.color = '';
+  }
+}
+    let prefs = loadPrefs();
+    applyPrefs(prefs);
+
+    // ── Font size controls
+    document.getElementById('font-increase').addEventListener('click', function () {
+      prefs.fontSize = Math.min(parseFloat((prefs.fontSize + 0.1).toFixed(2)), 1.6);
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+
+    document.getElementById('font-decrease').addEventListener('click', function () {
+      prefs.fontSize = Math.max(parseFloat((prefs.fontSize - 0.1).toFixed(2)), 0.8);
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+
+    document.getElementById('font-reset').addEventListener('click', function () {
+      prefs.fontSize = defaults.fontSize;
+      prefs.spacing = defaults.spacing;
+      prefs.fontFamily = defaults.fontFamily;
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+
+    // ── Line spacing toggle (3 steps: comfortable → relaxed → compact)
+    const spacingSteps = [1.95, 2.4, 1.5];
+    document.getElementById('spacing-toggle').addEventListener('click', function () {
+      const currentIndex = spacingSteps.indexOf(prefs.spacing);
+      prefs.spacing = spacingSteps[(currentIndex + 1) % spacingSteps.length];
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+
+    // ── Font family toggle (Georgia serif ↔ System sans-serif)
+    document.getElementById('font-toggle').addEventListener('click', function () {
+      prefs.fontFamily = prefs.fontFamily === 'georgia' ? 'sans' : 'georgia';
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+
+    // ── Dark mode toggle
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      prefs.darkMode = !prefs.darkMode;
+      applyPrefs(prefs);
+      savePrefs(prefs);
+    });
+  })();
+</script>
+
+  {{! ── CHAPTER CONTENT ── }}
+  <div class="chapter-content-wrapper container">
+    <h5 class="chapter-heading center-align">{{chapter.title}}</h5>
+    <div class="chapter-body">
+      {{{chapter.content}}}
+    </div>
+  </div>
+
+  {{! ── BOTTOM PAGINATION ── }}
+  <div class="chapter-pagination center-align">
+    {{#if prevChapter}}
+      <a href="/stories/{{story._id}}?chapter={{prevChapter}}" class="pag-btn">
+        <i class="fas fa-chevron-left"></i> Previous Chapter
+      </a>
+    {{else}}
+      <span class="pag-btn disabled">
+        <i class="fas fa-chevron-left"></i> Previous Chapter
+      </span>
+    {{/if}}
+    <span class="pag-count">{{currentChapter}} / {{totalChapters}}</span>
+    {{#if nextChapter}}
+      <a href="/stories/{{story._id}}?chapter={{nextChapter}}" class="pag-btn">
+        Next Chapter <i class="fas fa-chevron-right"></i>
+      </a>
+    {{else}}
+      <span class="pag-btn disabled">
+        Next Chapter <i class="fas fa-chevron-right"></i>
+      </span>
+    {{/if}}
+  </div>
+
 </div>
