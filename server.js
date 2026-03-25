@@ -29,14 +29,14 @@ app.use(express.json({ limit: "40kb" }));
 
 // method-override for req from templates to api
 app.use(
-  methodOverride(function (req, res) {
-    if (req.body && typeof req.body === "object" && "_method" in req.body) {
-      // look in urlencoded POST bodies and delete it
-      let method = req.body._method;
-      delete req.body._method;
-      return method;
-    }
-  })
+	methodOverride(function (req, res) {
+		if (req.body && typeof req.body === "object" && "_method" in req.body) {
+			// look in urlencoded POST bodies and delete it
+			let method = req.body._method;
+			delete req.body._method;
+			return method;
+		}
+	}),
 );
 
 // req log data
@@ -44,33 +44,34 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 // handlebars helpers
 const {
-  formatDate,
-  stripTags,
-  truncate,
-  editIcon,
-  select,
+	formatDate,
+	stripTags,
+	truncate,
+	editIcon,
+	select,
+	json,
 } = require("./utils/hbs");
 
 // templates- handlebars
 app.engine(
-  ".hbs",
-  exphnds({
-    helpers: { formatDate, stripTags, truncate, editIcon, select },
-    defaultLayout: "main",
-    extname: ".hbs",
-  })
+	".hbs",
+	exphnds({
+		helpers: { formatDate, stripTags, truncate, editIcon, select, json },
+		defaultLayout: "main",
+		extname: ".hbs",
+	}),
 );
 app.set("view engine", ".hbs");
 app.use(express.static("images"));
 
 // express sessions
 app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  })
+	session({
+		secret: "keyboard cat",
+		resave: false,
+		saveUninitialized: false,
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	}),
 );
 // passport middlewares
 app.use(passport.initialize());
@@ -78,8 +79,8 @@ app.use(passport.session());
 
 // set global variables for /stories/index.hbs to use user out of the loop
 app.use(function (req, res, next) {
-  res.locals.user = req.user || null;
-  next();
+	res.locals.user = req.user || null;
+	next();
 });
 
 // config static folder [directory]
@@ -95,6 +96,8 @@ app.use("/stories", require("./routes/stories"));
 // listeners
 const port = process.env.PORT || 5000;
 app.listen(
-  port,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}`)
+	port,
+	console.log(
+		`Server running in ${process.env.NODE_ENV} mode on port ${port}`,
+	),
 );
