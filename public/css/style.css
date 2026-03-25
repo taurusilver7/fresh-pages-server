@@ -1,49 +1,6 @@
+/* ── GLOBAL ── */
 p {
 	margin: 10px 0 !important;
-}
-
-.container {
-	width: 87vw;
-	/* height: screen; */
-	position: sticky;
-}
-
-.login-container {
-	width: 400px;
-	margin-top: 50px;
-	text-align: center;
-}
-
-.card-container {
-	padding: 15px;
-}
-
-.fa-small {
-	font-size: 16px;
-}
-
-.btn-float {
-	float: left;
-	margin-right: 10px;
-}
-
-.btn-floating {
-	transition: 0.3s ease-in;
-}
-
-.btn-floating:hover {
-	transform: scale(1.1);
-}
-
-.img-small {
-	width: 180px;
-}
-
-.img-title {
-	margin: 0;
-	padding: 0;
-	width: 150px;
-	/* height: auto; */
 }
 
 ::-webkit-scrollbar {
@@ -58,4 +15,369 @@ p {
 }
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
+}
+
+/* ── LAYOUT ── */
+.container {
+	width: 87vw;
+	position: sticky;
+}
+
+.login-container {
+	width: 400px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+/* ── CARDS ── */
+.card-container {
+	padding: 15px;
+}
+
+/* ── ICONS ── */
+.fa-small {
+	font-size: 16px;
+}
+
+/* ── BUTTONS ── */
+.btn-float {
+	float: left;
+	margin-right: 10px;
+}
+
+.btn-floating {
+	transition: 0.3s ease-in;
+}
+
+.btn-floating:hover {
+	transform: scale(1.1);
+}
+
+/* ── IMAGES ── */
+.img-small {
+	width: 180px;
+}
+
+.img-title {
+	margin: 0;
+	padding: 0;
+	width: 150px;
+}
+
+/* ── STORY SHOW — BANNER ── */
+/* ── STORY SHOW — BANNER ── */
+.story-banner {
+	background: #f5f5f5;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 0.85rem 1.5rem;
+	width: 100%;
+}
+
+.story-banner-inner {
+	max-width: 860px;
+	margin: 0 auto;
+}
+
+.story-breadcrumb {
+	font-size: 0.75rem;
+	color: #90a4ae;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	margin-bottom: 0.4rem !important;
+}
+
+.story-breadcrumb a {
+	color: #90a4ae;
+}
+
+.story-breadcrumb a:hover {
+	text-decoration: underline;
+}
+
+.story-breadcrumb .fa-chevron-right {
+	font-size: 0.6rem;
+	margin: 0 0.35rem;
+	vertical-align: middle;
+}
+
+.story-meta-block {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+.story-meta-text {
+	flex: 1;
+}
+
+.story-title {
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: #263238;
+	margin: 0 0 0.15rem 0;
+	line-height: 1.3;
+}
+
+.story-author-line {
+	font-size: 0.82rem;
+	color: #78909c;
+	margin: 0 0 0.2rem 0 !important;
+}
+
+.story-author-line a {
+	color: #1565c0;
+	font-weight: 500;
+}
+
+.story-author-line a:hover {
+	text-decoration: underline;
+}
+
+.story-description {
+	font-size: 0.83rem;
+	color: #546e7a;
+	margin: 0.2rem 0 0.3rem 0 !important;
+	line-height: 1.5;
+	font-style: italic;
+}
+
+.story-meta-inline {
+	font-size: 0.78rem;
+	color: #90a4ae;
+	margin: 0 !important;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.2rem;
+	align-items: center;
+}
+
+.story-meta-inline strong {
+	color: #607d8b;
+}
+
+.meta-divider {
+	color: #b0bec5;
+	padding: 0 0.15rem;
+}
+/* ── STORY SHOW — CHAPTER NAV BAR ── */
+.chapter-nav-bar {
+	background: #fafafa;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 0.55rem 1.5rem;
+	position: sticky;
+	top: 0;
+	z-index: 99;
+}
+
+.chapter-nav-inner {
+	max-width: 860px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* ── Reader formatter controls ── */
+.reader-controls {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.reader-btn {
+	background: none;
+	border: none;
+	color: #546e7a;
+	font-size: 0.88rem;
+	padding: 0.3rem 0.5rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition:
+		background 0.15s,
+		color 0.15s;
+	line-height: 1;
+	font-family: "Georgia", serif;
+}
+
+.reader-btn:hover {
+	background: #eceff1;
+	color: #263238;
+}
+
+.reader-divider {
+	width: 1px;
+	height: 1.1rem;
+	background: #cfd8dc;
+	margin: 0 0.25rem;
+}
+
+/* ── Chapter selector + jump buttons ── */
+.chapter-jump-btns {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.chapter-select-wrapper {
+	position: relative;
+}
+
+.chapter-select-wrapper select {
+	background: #fff;
+	color: #37474f;
+	border: 1px solid #cfd8dc;
+	border-radius: 5px;
+	padding: 0.3rem 2rem 0.3rem 0.65rem;
+	font-size: 0.82rem;
+	appearance: none;
+	cursor: pointer;
+	transition: border-color 0.2s;
+	max-width: 240px;
+}
+
+.chapter-select-wrapper select:focus {
+	outline: none;
+	border-color: #78909c;
+}
+
+.select-icon {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #90a4ae;
+	font-size: 0.65rem;
+	pointer-events: none;
+}
+
+.jump-btn {
+	background: #fff;
+	color: #546e7a;
+	border: 1px solid #cfd8dc;
+	border-radius: 5px;
+	padding: 0.3rem 0.75rem;
+	font-size: 0.82rem;
+	text-decoration: none;
+	transition:
+		background 0.15s,
+		color 0.15s;
+	white-space: nowrap;
+}
+
+.jump-btn:hover {
+	background: #eceff1;
+	color: #263238;
+}
+
+.jump-btn.disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/* ── Dark mode ── */
+.reader-dark {
+	background: #1a1a2e;
+}
+
+.reader-dark .chapter-content-wrapper {
+	background: #1a1a2e;
+}
+
+.reader-dark .chapter-heading {
+	color: #b0bec5;
+}
+
+.reader-dark .chapter-body {
+	color: #cfd8dc;
+}
+
+.reader-dark .chapter-pagination {
+	border-top-color: #2a2a3e;
+}
+
+.reader-dark .pag-btn {
+	background: #2a2a3e;
+	color: #80cbc4;
+	border: 1px solid #3a3a5c;
+}
+
+.reader-dark .pag-btn:hover {
+	background: #0f3460;
+	color: #fff;
+}
+
+.reader-dark .pag-btn.disabled {
+	background: #2a2a3e;
+	color: #455a64;
+}
+
+.reader-dark .pag-count {
+	color: #546e7a;
+}
+
+/* ── STORY SHOW — CHAPTER CONTENT ── */
+.chapter-content-wrapper {
+	padding: 2.5rem 1rem 3rem;
+	max-width: 780px;
+}
+
+.chapter-heading {
+	color: #37474f;
+	font-size: 1.15rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	margin-bottom: 1.8rem;
+}
+
+.chapter-body {
+	font-family: "Georgia", serif;
+	font-size: 1.08rem;
+	line-height: 1.95;
+	color: #37474f;
+	text-align: justify;
+}
+
+.chapter-body p {
+	margin-bottom: 1.3rem;
+}
+
+/* ── STORY SHOW — BOTTOM PAGINATION ── */
+.chapter-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.2rem;
+	padding: 2rem 1rem 3rem;
+	border-top: 1px solid #eceff1;
+}
+
+.pag-btn {
+	background: #0f3460;
+	color: #fff;
+	border-radius: 6px;
+	padding: 0.55rem 1.3rem;
+	font-size: 0.9rem;
+	text-decoration: none;
+	transition: background 0.2s;
+}
+
+.pag-btn:hover {
+	background: #16213e;
+	color: #fff;
+}
+
+.pag-btn.disabled {
+	background: #eceff1;
+	color: #b0bec5;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.pag-count {
+	font-size: 0.88rem;
+	color: #90a4ae;
+	min-width: 60px;
 }
