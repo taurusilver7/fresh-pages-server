@@ -279,11 +279,84 @@ p {
 
 /* ── Dark mode ── */
 .reader-dark {
-	background: #1a1a2e;
+	background: #1f1f1f;
+}
+
+.reader-dark .story-banner {
+	background: #181818;
+	border-bottom-color: #2a2a3e;
+}
+
+.reader-dark .story-breadcrumb,
+.reader-dark .story-breadcrumb a {
+	color: #546e7a;
+}
+
+.reader-dark .story-title {
+	color: #cfd8dc;
+}
+
+.reader-dark .story-author-line {
+	color: #546e7a;
+}
+
+.reader-dark .story-author-line a {
+	color: #80cbc4;
+}
+
+.reader-dark .story-description {
+	color: #546e7a;
+}
+
+.reader-dark .story-meta-inline {
+	color: #546e7a;
+}
+
+.reader-dark .story-meta-inline strong {
+	color: #78909c;
+}
+
+.reader-dark .meta-divider {
+	color: #2a2a3e;
+}
+
+.reader-dark .chapter-nav-bar {
+	background: #181818;
+	border-color: #2a2a3e;
+}
+
+.reader-dark .reader-btn {
+	color: #546e7a;
+}
+
+.reader-dark .reader-btn:hover {
+	background: #1f1f1f;
+	color: #cfd8dc;
+}
+
+.reader-dark .reader-divider {
+	background: #2a2a3e;
+}
+
+.reader-dark .jump-btn {
+	background: #1f1f1f;
+	color: #a1b1ba;
+	border-color: #2a2a3e;
+}
+
+.reader-dark .jump-btn:hover {
+	background: #0f3460;
+	color: #fff;
+}
+
+.reader-dark .chapter-select-wrapper select {
+	background: #1f1f1f;
+	color: #cfd8dc;
+	border-color: #2a2a3e;
 }
 
 .reader-dark .chapter-content-wrapper {
-	background: #1a1a2e;
+	background: #1f1f1f;
 }
 
 .reader-dark .chapter-heading {
@@ -299,7 +372,7 @@ p {
 }
 
 .reader-dark .pag-btn {
-	background: #2a2a3e;
+	background: #181818;
 	color: #80cbc4;
 	border: 1px solid #3a3a5c;
 }
@@ -310,7 +383,7 @@ p {
 }
 
 .reader-dark .pag-btn.disabled {
-	background: #2a2a3e;
+	background: #181818;
 	color: #455a64;
 }
 
