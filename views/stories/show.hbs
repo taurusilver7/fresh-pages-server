@@ -88,10 +88,8 @@
 <script>
   (function () {
     const body = document.body;
-    const chapterBody = document.querySelector('.chapter-body');
     const STORAGE_KEY = 'fp_reader_prefs';
 
-    // ── Defaults
     const defaults = {
       fontSize: 1.08,
       spacing: 1.95,
@@ -99,7 +97,6 @@
       darkMode: false
     };
 
-    // ── Load persisted prefs or fall back to defaults
     function loadPrefs() {
       try {
         return Object.assign({}, defaults, JSON.parse(localStorage.getItem(STORAGE_KEY)));
@@ -108,39 +105,45 @@
       }
     }
 
-    // ── Save prefs to localStorage
     function savePrefs(prefs) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
     }
 
-    // ── Apply prefs to DOM
-   function applyPrefs(prefs) {
-  chapterBody.style.fontSize = prefs.fontSize + 'rem';
-  chapterBody.style.lineHeight = prefs.spacing;
-  chapterBody.style.fontFamily = prefs.fontFamily === 'georgia'
-    ? "'Georgia', serif"
-    : "'Helvetica Neue', Arial, sans-serif";
+    function applyPrefs(prefs) {
+      // Guard — chapter body may be empty if no content yet
+      const chapterBody = document.querySelector('.chapter-body');
+      if (chapterBody) {
+        chapterBody.style.fontSize = prefs.fontSize + 'rem';
+        chapterBody.style.lineHeight = prefs.spacing;
+        chapterBody.style.fontFamily = prefs.fontFamily === 'georgia'
+          ? "'Georgia', serif"
+          : "'Helvetica Neue', Arial, sans-serif";
+      }
 
-  const targets = [
-    document.querySelector('.chapter-content-wrapper'),
-    document.querySelector('.chapter-pagination'),
-    document.querySelector('.story-show-wrapper')
-  ];
+      // Dark mode targets
+      const targets = [
+        document.querySelector('.story-show-wrapper'),
+		  document.querySelector('.story-banner'),
+        document.querySelector('.chapter-content-wrapper'),
+        document.querySelector('.chapter-pagination')
+      ];
 
-  if (prefs.darkMode) {
-    body.classList.add('reader-dark');
-    targets.forEach(el => { if (el) el.classList.add('reader-dark'); });
-    document.getElementById('theme-toggle').style.color = '#80cbc4';
-  } else {
-    body.classList.remove('reader-dark');
-    targets.forEach(el => { if (el) el.classList.remove('reader-dark'); });
-    document.getElementById('theme-toggle').style.color = '';
-  }
-}
+      if (prefs.darkMode) {
+        body.classList.add('reader-dark');
+        targets.forEach(el => { if (el) el.classList.add('reader-dark'); });
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.style.color = '#80cbc4';
+      } else {
+        body.classList.remove('reader-dark');
+        targets.forEach(el => { if (el) el.classList.remove('reader-dark'); });
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.style.color = '';
+      }
+    }
+
     let prefs = loadPrefs();
     applyPrefs(prefs);
 
-    // ── Font size controls
     document.getElementById('font-increase').addEventListener('click', function () {
       prefs.fontSize = Math.min(parseFloat((prefs.fontSize + 0.1).toFixed(2)), 1.6);
       applyPrefs(prefs);
@@ -161,7 +164,6 @@
       savePrefs(prefs);
     });
 
-    // ── Line spacing toggle (3 steps: comfortable → relaxed → compact)
     const spacingSteps = [1.95, 2.4, 1.5];
     document.getElementById('spacing-toggle').addEventListener('click', function () {
       const currentIndex = spacingSteps.indexOf(prefs.spacing);
@@ -170,19 +172,18 @@
       savePrefs(prefs);
     });
 
-    // ── Font family toggle (Georgia serif ↔ System sans-serif)
     document.getElementById('font-toggle').addEventListener('click', function () {
       prefs.fontFamily = prefs.fontFamily === 'georgia' ? 'sans' : 'georgia';
       applyPrefs(prefs);
       savePrefs(prefs);
     });
 
-    // ── Dark mode toggle
     document.getElementById('theme-toggle').addEventListener('click', function () {
       prefs.darkMode = !prefs.darkMode;
       applyPrefs(prefs);
       savePrefs(prefs);
     });
+
   })();
 </script>
 
