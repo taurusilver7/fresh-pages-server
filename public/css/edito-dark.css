@@ -1,0 +1,45 @@
+html, body {
+  background: #1f1f1f !important;
+  color: #cfd8dc !important;
+}
+
+body {
+  padding: 12px 16px;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  caret-color: #80cbc4;
+}
+
+p {
+  color: #cfd8dc;
+  margin: 0 0 1rem !important;
+}
+
+a {
+  color: #80cbc4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #b0bec5;
+}
+
+blockquote {
+  border-left: 3px solid #2a2a3e;
+  color: #78909c;
+  padding-left: 1rem;
+  margin-left: 0;
+}
+
+pre, code {
+  background: #181818;
+  color: #80cbc4;
+  border: 1px solid #2a2a3e;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+::selection {
+  background: #0f3460;
+  color: #fff;
+}
