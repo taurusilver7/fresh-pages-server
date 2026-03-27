@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <title>Fresh pages | StoryBooks</title>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.0/ckeditor.js" integrity="sha512-7My1gsUz5JUQgT8+P0sHKaPel/77X3zjGZsXbTS8Y7MhDEJ+f9xg9H+pPzONFL5djye0zWLlxFLApGsWQ1gdfA==" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,16 +23,26 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.0/ckeditor.js" integrity="sha512-7My1gsUz5JUQgT8+P0sHKaPel/77X3zjGZsXbTS8Y7MhDEJ+f9xg9H+pPzONFL5djye0zWLlxFLApGsWQ1gdfA==" crossorigin="anonymous"></script>
+
 
     <script>
-        M.Sidenav.init(document.querySelector('.sidenav'))
-        M.FormSelect.init(document.querySelector('#status'))
-
-        {{!-- replace the textarea with name-body to ck editor --}}
-        CKEDITOR.replace('body', {
-            plugins: 'wysiwygarea, toolbar, colordialog, dialogui, format, codesnippet, font, horizontalrule, uicolor, undo, pagebreak, find, emoji, basicstyles, blockquote, justify, link'
-        })
+       
+        //{{!-- replace the textarea with name-body to ck editor --}}
+       if (document.getElementById('body')) {
+            CKEDITOR.replace('body', {
+            plugins: 'wysiwygarea,toolbar,colordialog,dialogui,format,codesnippet,font,horizontalrule,uicolor,undo,pagebreak,find,basicstyles,blockquote,justify,link,list,indent,enterkey,entities,htmlwriter,clipboard,maximize,notification',
+            height: 360,
+            wordcount: {
+                showParagraphs: false,
+                showBlockCount: false,
+                showCharCount: true,
+                showWordCount: true,
+                countSpacesAsChars: false,
+                maxWordCount: -1,
+                maxCharCount: -1
+            }
+            });
+  }
     </script>
 </body>
 </html>
