@@ -1,44 +1,70 @@
-{{! <h6>Dashboard</h6> }}
-<h3>Welcome, {{name}}</h3>
-{{#if stories}}
-	<p>Here are your stories..</p>
-	<table class="stripe">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Date created</th>
-				<th>Status</th>
-				<th>Edit/Delete</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each stories}}
-				<tr>
-					<td><a href="/stories/{{_id}}">{{title}}</a></td>
-					<td>{{formatDate createdAt "MMMM Do YYYY, h:mm a"}}</td>
-					<td><span class="dash-status">{{status}}</span></td>
-					<td>
-						{{! edit & delete buttons }}
-						<a href="/stories/edit/{{_id}}" class="btn btn-float"><i
-								class="fas fa-edit"
-							></i></a>
+{{! Dashboard }}
+<div class="dash-wrapper">
 
-						{{! form to create a delete button }}
-						<form
-							action="/stories/{{_id}}"
-							method="POST"
-							id="delete-form"
-						>
-							<input type="hidden" name="_method" value="DELETE" />
-							<button class="btn red" type="submit"><i
-									class="fas fa-trash"
-								></i></button>
-						</form>
-					</td>
-				</tr>
-			{{/each}}
-		</tbody>
-	</table>
-{{else}}
-	<p>Unfortunately, You have not yet created any stories.</p>
-{{/if}}
+  <div class="dash-header">
+    <div>
+      <h5 class="dash-title">Dashboard</h5>
+      <p class="dash-sub">Welcome back, {{user.firstName}}. Here are your stories.</p>
+    </div>
+  </div>
+
+  {{#if stories}}
+    <div class="dash-grid">
+      {{#each stories}}
+        <div class="dash-card">
+
+          <div class="dash-card-body">
+            <div class="dash-card-top">
+              <span class="dash-card-status {{status}}">{{status}}</span>
+              <span class="dash-card-date">{{formatDate createdAt "MMM Do YYYY"}}</span>
+            </div>
+            <a href="/stories/{{_id}}" class="dash-card-title">{{title}}</a>
+            {{#if description}}
+              <p class="dash-card-desc">{{description}}</p>
+            {{else}}
+              <p class="dash-card-desc">{{stripTags (truncate chapters.[0].content 120)}}</p>
+            {{/if}}
+            <div class="dash-card-meta">
+              <span>{{chapters.length}} chapter(s)</span>
+            </div>
+          </div>
+
+          <div class="dash-card-actions">
+            
+            <a href="/stories/edit/{{_id}}" class="dash-action-btn edit">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <form action="/stories/{{_id}}" method="POST" class="dash-delete-form">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="dash-action-btn delete">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </form>
+          </div>
+
+        </div>
+      {{/each}}
+    </div>
+
+  {{else}}
+    <div class="dash-empty">
+      <i class="fas fa-feather-alt dash-empty-icon"></i>
+      <p>You have not written any stories yet.</p>
+      <a href="/stories/add" class="btn story-form-submit">Write your first story</a>
+    </div>
+  {{/if}}
+
+</div>
+
+<script>
+  (function () {
+    try {
+      const prefs = JSON.parse(localStorage.getItem('fp_reader_prefs')) || {};
+      if (prefs.darkMode) {
+        document.body.classList.add('reader-dark');
+        const wrapper = document.querySelector('.dash-wrapper');
+        if (wrapper) wrapper.classList.add('reader-dark');
+      }
+    } catch(e) {}
+  })();
+</script>
