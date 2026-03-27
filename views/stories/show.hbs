@@ -60,17 +60,10 @@
         <span class="jump-btn disabled">
           <i class="fas fa-chevron-left"></i> Prev
         </span>
-      {{/if}}
-
-      <form method="GET" action="/stories/{{story._id}}" id="chapter-select-form">
-        <div class="chapter-select-wrapper">
-          <select name="chapter" id="chapter-select" onchange="this.form.submit()">
-            {{!-- {{{chapterOptions story.chapters currentChapter}}} --}}
-          </select>
-          <i class="fas fa-chevron-down select-icon"></i>
-        </div>
-      </form>
-
+		{{/if}}
+     
+  			<span class="pag-count">{{currentChapter}} / {{totalChapters}}</span>
+     
       {{#if nextChapter}}
         <a href="/stories/{{story._id}}?chapter={{nextChapter}}" class="jump-btn">
           Next <i class="fas fa-chevron-right"></i>
