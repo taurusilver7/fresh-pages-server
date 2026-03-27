@@ -22,9 +22,9 @@ router.get("/", ensureGuest, (req, res) => {
 router.get("/dashboard", ensureAuth, async (req, res) => {
   // console.log(req.user);
   try {
-    const stories = await Story.find({ user: req.user.id }).lean();
+    const stories = await Story.find({ user: req.user.id }).populate("user", 'displayName firstName').lean();
     res.render("dashboard", {
-      name: req.user.displayName,
+      user: req.user,
       stories,
     });
   } catch (err) {
