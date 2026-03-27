@@ -102,6 +102,9 @@
   document.getElementById('form-theme-toggle').addEventListener('click', function () {
     prefs.darkMode = !prefs.darkMode;
     applyFormDark(prefs.darkMode);
+    // ── CHANGE 1: moved initEditor call after saveActive
+    // so current chapter content is preserved before editor reinitializes
+    saveActive();
     initEditor(chapters[activeIndex].content || '');
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
   });
@@ -122,10 +125,13 @@
 
     const isDark = document.body.classList.contains('form-dark');
 
+    // ── CHANGE 2: cleaned up plugins string — removed spaces after commas
+    // CKEditor plugin names must be comma-separated with no spaces
+    // spaces in the plugins string cause silent plugin load failures
     editor = CKEDITOR.replace('active-editor', {
-     plugins: 'wysiwygarea, toolbar, colordialog, dialogui, format, codesnippet, font, horizontalrule, uicolor, undo, pagebreak, find, basicstyles, blockquote, justify, link, indent',
-            height: "360",
-            
+      plugins: 'wysiwygarea,toolbar,colordialog,dialogui,format,codesnippet,font,horizontalrule,uicolor,undo,pagebreak,find,basicstyles,blockquote,justify,link,list,indent,enterkey,entities,htmlwriter,clipboard,maximize,notification',
+      height: 360,
+      
     });
 
     editor.on('instanceReady', function () {
@@ -218,7 +224,22 @@
   }
 
   // ── On submit — write all chapter data into hidden inputs
-  document.getElementById('story-form-add').addEventListener('submit', function () {
+  // ── CHANGE 3: added e.preventDefault() + manual this.submit()
+  // without preventDefault, the form fires before hidden inputs are populated
+  // because saveActive() and the forEach loop are synchronous but the DOM
+  // updates need to complete before the browser serializes the form data.
+  // e.preventDefault() stops the immediate submission, we populate all inputs,
+  // then this.submit() fires the actual POST with complete data.
+  document.getElementById('story-form-add').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // ── CHANGE 4: force CKEditor to flush iframe content to textarea
+    // editor.getData() inside saveActive() is reliable, but updateElement()
+    // guarantees the textarea value is also in sync — belt and braces
+    for (const name in CKEDITOR.instances) {
+      CKEDITOR.instances[name].updateElement();
+    }
+
     saveActive();
 
     const store = document.getElementById('chapters-data');
@@ -237,6 +258,10 @@
       contentInput.value = ch.content || '';
       store.appendChild(contentInput);
     });
+
+    
+
+    this.submit();
   });
 
   // ── Tab label updates live as user types
