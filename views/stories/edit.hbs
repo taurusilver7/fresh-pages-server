@@ -1,41 +1,281 @@
-<h3>Edit Story</h3>
-<div class="row">
-	<form action="/stories/{{story._id}}" method="POST" class="col s12">
-		<input type="hidden" name="_method" value="PUT" />
-		<div class="row">
-			<div class="input-field">
-				<input
-					type="text"
-					id="title"
-					name="title"
-					value="{{story.title}}"
-				/>
-				<label for="title">Title</label>
-			</div>
-		</div>
+<div class="story-form-wrapper">
 
-		<div class="row">
-			<div class="input-field">
-				<select name="status" id="status">
-					{{#select story.status}}
-						<option value="public" selected>Public</option>
-						<option value="private">Private</option>
-					{{/select}}
-				</select>
-				<label for="status">Status</label>
-			</div>
-		</div>
+  {{! ── HEADER ── }}
+  <div class="story-form-header">
+    <div class="story-form-header-top">
+      <div>
+        <h4 class="story-form-title">Edit Story</h4>
+        <p class="story-form-sub">Update your story details and chapters below.</p>
+      </div>
+      <button type="button" id="form-theme-toggle" class="reader-btn story-form-theme-btn" title="Toggle dark mode">&#9684;</button>
+    </div>
+  </div>
 
-		<div class="row">
-			<div class="input-field">
-				<h5>Tell us a story</h5>
-				<textarea name="body" id="body">{{story.body}}</textarea>
-			</div>
-		</div>
+  <form action="/stories/{{story._id}}" method="POST" id="story-form-edit">
+    <input type="hidden" name="_method" value="PUT">
 
-		<div class="row">
-			<input type="submit" value="Save" class="btn" />
-			<a href="/dashboard" class="btn red">Cancel</a>
-		</div>
-	</form>
+    {{! ── STORY DETAILS ── }}
+    <div class="story-form-section">
+      <h6 class="story-form-section-label">Story Details</h6>
+
+      <div class="story-form-field">
+        <input type="text" id="title" name="title" placeholder=" " value="{{story.title}}" required>
+        <label for="title">Title</label>
+      </div>
+
+      <div class="story-form-field">
+        <textarea id="description" name="description" placeholder=" " rows="2">{{story.description}}</textarea>
+        <label for="description">Short Description <span class="optional">(optional)</span></label>
+      </div>
+
+      <div class="story-form-field">
+        <span class="story-form-select-label">Visibility</span>
+        <select name="status" id="status" class="browser-default story-form-select">
+          {{#select story.status}}
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+          {{/select}}
+        </select>
+      </div>
+    </div>
+
+    {{! ── CHAPTERS ── }}
+    <div class="story-form-section">
+      <h6 class="story-form-section-label">Chapters</h6>
+
+      {{! Tab bar — rendered by JS from __STORY_CHAPTERS__ }}
+      <div class="chapter-tab-bar" id="chapter-tab-bar">
+        <button type="button" class="chapter-tab-add" id="add-chapter-btn">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+      {{! Single editor panel }}
+      <div class="chapter-panel">
+        <div class="story-form-field">
+          <input type="text" id="active-chapter-title" placeholder=" ">
+          <label for="active-chapter-title">Chapter Title <span class="optional">(optional)</span></label>
+        </div>
+        <div class="chapter-editor-wrap">
+          <textarea id="active-editor"></textarea>
+        </div>
+      </div>
+
+      {{! Hidden data store — populated on submit }}
+      <div id="chapters-data"></div>
+
+    </div>
+
+    {{! ── ACTIONS ── }}
+    <div class="story-form-actions">
+      <input type="submit" value="Save Changes" class="btn story-form-submit">
+      <a href="/dashboard" class="btn red darken-1">Cancel</a>
+    </div>
+
+  </form>
 </div>
+
+{{! Inject story chapters from server into JS scope }}
+<script>
+  window.__STORY_CHAPTERS__ = {{{json story.chapters}}};
+</script>
+
+<script>
+(function () {
+
+  // ── Dark mode
+  const STORAGE_KEY = 'fp_reader_prefs';
+  let prefs = {};
+  try { prefs = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e) { prefs = {}; }
+
+  function applyFormDark(dark) {
+    const wrapper = document.querySelector('.story-form-wrapper');
+    if (dark) {
+      document.body.classList.add('form-dark');
+      if (wrapper) wrapper.classList.add('form-dark');
+      document.getElementById('form-theme-toggle').style.color = '#80cbc4';
+    } else {
+      document.body.classList.remove('form-dark');
+      if (wrapper) wrapper.classList.remove('form-dark');
+      document.getElementById('form-theme-toggle').style.color = '';
+    }
+  }
+
+  applyFormDark(!!prefs.darkMode);
+
+  document.getElementById('form-theme-toggle').addEventListener('click', function () {
+    prefs.darkMode = !prefs.darkMode;
+    applyFormDark(prefs.darkMode);
+    initEditor(chapters[activeIndex].content || '');
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  });
+
+  // ── Chapter state — pre-populated from server data
+  const chapters = (window.__STORY_CHAPTERS__ || []).map(function (ch) {
+    return {
+      title: ch.title || '',
+      content: ch.content || ''
+    };
+  });
+
+  // Fallback if story has no chapters somehow
+  if (chapters.length === 0) {
+    chapters.push({ title: '', content: '' });
+  }
+
+  let activeIndex = 0;
+
+  // ── CKEditor — single instance
+  let editor = null;
+
+  function initEditor(content) {
+    if (editor) {
+      editor.destroy();
+      editor = null;
+    }
+    document.getElementById('active-editor').value = content || '';
+
+    const isDark = document.body.classList.contains('form-dark');
+
+    editor = CKEDITOR.replace('active-editor', {
+      plugins: 'wysiwygarea,toolbar,colordialog,dialogui,format,codesnippet,font,horizontalrule,uicolor,undo,pagebreak,find,basicstyles,blockquote,justify,link,list,indent,enterkey,entities,htmlwriter,clipboard,maximize,notification',
+      height: 360,
+      wordcount: {
+        showParagraphs: false,
+        showBlockCount: false,
+        showCharCount: true,
+        showWordCount: true,
+        countSpacesAsChars: false,
+        maxWordCount: -1,
+        maxCharCount: -1
+      }
+    });
+
+    editor.on('instanceReady', function () {
+      if (isDark) {
+        const iframeDoc = editor.document.$;
+        const link = iframeDoc.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/css/editor-dark.css';
+        iframeDoc.head.appendChild(link);
+      }
+    });
+  }
+
+  // ── Save active editor state back into chapters array
+  function saveActive() {
+    if (editor) {
+      chapters[activeIndex].content = editor.getData();
+    }
+    chapters[activeIndex].title =
+      document.getElementById('active-chapter-title').value;
+  }
+
+  // ── Switch to a chapter tab
+  function switchTo(index) {
+    saveActive();
+    activeIndex = index;
+
+    document.querySelectorAll('.chapter-tab').forEach(function (tab, i) {
+      tab.classList.toggle('active', i === index);
+    });
+
+    document.getElementById('active-chapter-title').value =
+      chapters[index].title || '';
+    initEditor(chapters[index].content || '');
+  }
+
+  // ── Render tab bar
+  function renderTabs() {
+    const bar = document.getElementById('chapter-tab-bar');
+    bar.querySelectorAll('.chapter-tab').forEach(function (t) { t.remove(); });
+
+    chapters.forEach(function (ch, i) {
+      const tab = document.createElement('div');
+      tab.className = 'chapter-tab' + (i === activeIndex ? ' active' : '');
+      tab.dataset.index = i;
+      tab.innerHTML =
+        '<span class="chapter-tab-label">' +
+          (ch.title.trim() || 'Chapter ' + (i + 1)) +
+        '</span>' +
+        (chapters.length > 1
+          ? '<button type="button" class="chapter-tab-remove" data-index="' + i + '">&times;</button>'
+          : '');
+
+      tab.querySelector('.chapter-tab-label').addEventListener('click', function () {
+        switchTo(i);
+      });
+
+      const removeBtn = tab.querySelector('.chapter-tab-remove');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          removeChapter(i);
+        });
+      }
+
+      bar.insertBefore(tab, document.getElementById('add-chapter-btn'));
+    });
+  }
+
+  // ── Add a new chapter
+  document.getElementById('add-chapter-btn').addEventListener('click', function () {
+    saveActive();
+    chapters.push({ title: '', content: '' });
+    activeIndex = chapters.length - 1;
+    renderTabs();
+    document.getElementById('active-chapter-title').value = '';
+    initEditor('');
+  });
+
+  // ── Remove a chapter
+  function removeChapter(index) {
+    if (chapters.length === 1) return;
+    chapters.splice(index, 1);
+    activeIndex = Math.min(activeIndex, chapters.length - 1);
+    renderTabs();
+    document.getElementById('active-chapter-title').value =
+      chapters[activeIndex].title || '';
+    initEditor(chapters[activeIndex].content || '');
+  }
+
+  // ── On submit — write all chapter data into hidden inputs
+  document.getElementById('story-form-edit').addEventListener('submit', function () {
+    saveActive();
+
+    const store = document.getElementById('chapters-data');
+    store.innerHTML = '';
+
+    chapters.forEach(function (ch) {
+      const titleInput = document.createElement('input');
+      titleInput.type = 'hidden';
+      titleInput.name = 'chapterTitles[]';
+      titleInput.value = ch.title || '';
+      store.appendChild(titleInput);
+
+      const contentInput = document.createElement('input');
+      contentInput.type = 'hidden';
+      contentInput.name = 'chapterContents[]';
+      contentInput.value = ch.content || '';
+      store.appendChild(contentInput);
+    });
+  });
+
+  // ── Tab label updates live as user types
+  document.getElementById('active-chapter-title').addEventListener('input', function () {
+    chapters[activeIndex].title = this.value;
+    const activeTab = document.querySelector('.chapter-tab.active .chapter-tab-label');
+    if (activeTab) {
+      activeTab.textContent = this.value.trim() || 'Chapter ' + (activeIndex + 1);
+    }
+  });
+
+  // ── Init — render tabs and load first chapter into editor
+  renderTabs();
+  initEditor(chapters[0].content || '');
+  document.getElementById('active-chapter-title').value = chapters[0].title || '';
+
+})();
+</script>
