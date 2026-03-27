@@ -1,31 +1,62 @@
 {{!-- Stories Index Page --}}
+<div class="stories-index-wrapper">
 
-<h2>Stories</h2>
-<div class="row">
-    {{#each stories}}
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    {{!-- todo: editIcon --}}
-                    {{{editIcon user ../user _id }}}
-                </div>
+  <div class="stories-index-header">
+    <h5 class="stories-index-title">Public Stories</h5>
+    <span class="stories-index-count">
+      {{#if stories}}All public stories{{/if}}
+    </span>
+  </div>
 
-                <div class="card-content center-align">
-                    <h5>{{title}}</h5>
-                    <p>{{stripTags (truncate body 120)}}</p>
-                    <br>
-                    <div class="chip">
-                        <img src={{user.image}} alt="author">
-                        <a href="/stories/user/{{user._id}}">{{user.firstName}} {{user.lastName}}</a>
-                    </div>
-                </div>
+  {{#each stories}}
+    <div class="story-feed-item">
 
-                <div class="card-action center-align">
-                    <a href="/stories/{{_id}}" class="btn grey">Read More</a>
-                </div>
-            </div>
+      <div class="story-feed-main">
+        <div class="story-feed-top">
+          <a href="/stories/{{_id}}" class="story-feed-title">{{title}}</a>
+          <span class="story-feed-status {{status}}">{{status}}</span>
+          {{{editIcon user ../user _id false}}}
         </div>
-    {{else}}
-        <p>No stories to display.</p>
-    {{/each}}
+
+        {{#if description}}
+          <p class="story-feed-description">{{description}}</p>
+        {{else}}
+          <p class="story-feed-description">{{stripTags (truncate chapters.[0].content 180)}}</p>
+        {{/if}}
+
+        <div class="story-feed-meta">
+          <span>By: <a href="/stories/user/{{user._id}}" class="story-feed-author">{{user.displayName}}</a></span>
+          <span class="meta-divider">·</span>
+          <span>{{chapters.length}} chapter(s)</span>
+          <span class="meta-divider">·</span>
+          <span>{{formatDate createdAt "MMM Do YYYY"}}</span>
+        </div>
+      </div>
+
+      <div class="story-feed-action">
+        <a href="/stories/{{_id}}" class="story-feed-read-btn">Read</a>
+      </div>
+
+    </div>
+  {{else}}
+    <div class="stories-empty">
+      <p>No public stories to display yet.</p>
+    </div>
+  {{/each}}
+
+  <script>
+  (function () {
+    try {
+      const prefs = JSON.parse(localStorage.getItem('fp_reader_prefs')) || {};
+      if (prefs.darkMode) {
+        document.body.classList.add('reader-dark');
+        const wrapper = document.querySelector('.stories-index-wrapper');
+        if (wrapper) wrapper.classList.add('reader-dark');
+      }
+    } catch(e) {
+         // localStorage unavailable or prefs malformed — default to light mode
+    }
+  })();
+</script>
+
 </div>
