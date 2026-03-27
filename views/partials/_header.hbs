@@ -1,19 +1,42 @@
-<nav class="grey darken-3">
-	<div class="nav-wrapper container">
-		<a href="#!" class="brand-logo center"><img
-				src="/logo.png"
-				alt="title-logo"
-				class="responsive-img img-title"
-			/></a>
-		<a
-			href="#"
-			data-target="mobile-demo"
-			class="sidenav-trigger show-on-large"
-		><i class="fas fa-bars"></i></a>
-		<ul class="sidenav" id="mobile-demo">
-			<li><a href="/stories">Public Stories</a></li>
-			<li><a href="/dashboard">Dashboard</a></li>
-			<li><a href="/auth/logout">Logout</a></li>
-		</ul>
-	</div>
+<nav class="fp-navbar">
+  <div class="fp-navbar-inner">
+
+    <ul class="fp-navbar-links">
+      <li><a href="/stories" class="fp-nav-link">Public Stories</a></li>
+      <li><a href="/dashboard" class="fp-nav-link">Dashboard</a></li>
+    </ul>
+
+    {{#if user}}
+      <div class="fp-navbar-right">
+        <span class="fp-username">{{user.displayName}}</span>
+        <a href="/auth/logout" class="fp-nav-logout">Logout</a>
+      </div>
+    {{/if}}
+
+  </div>
 </nav>
+
+<script>
+  (function () {
+
+    try {
+      const prefs = JSON.parse(localStorage.getItem('fp_reader_prefs')) || {};
+      if (prefs.darkMode) {
+        document.querySelector('.fp-navbar').classList.add('fp-navbar-dark');
+      }
+    } catch(e) {}
+
+    const observer = new MutationObserver(function () {
+      const isDark =
+        document.body.classList.contains('reader-dark') ||
+        document.body.classList.contains('form-dark');
+      document.querySelector('.fp-navbar').classList.toggle('fp-navbar-dark', isDark);
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+  })();
+</script>
