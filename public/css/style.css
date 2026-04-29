@@ -199,7 +199,7 @@ p {
 	position: sticky;
 	top: 0;
 	z-index: 99;
-	overflow-x: auto;
+	/* overflow-x: auto; */
 	-webkit-overflow-scrolling: touch;
 }
 
@@ -244,6 +244,8 @@ p {
 		color 0.15s;
 	line-height: 1;
 	font-family: "Georgia", serif;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .reader-btn:hover {
@@ -317,6 +319,15 @@ p {
 }
 
 @media (max-width: 480px) {
+	/* Reduce nav padding for small screens */
+	.chapter-nav-bar {
+		padding: 0.5rem 0.75rem;
+	}
+
+	.chapter-nav-inner {
+		gap: 0.5rem;
+	}
+
 	.jump-btn .btn-text {
 		display: none;
 	}
@@ -324,10 +335,10 @@ p {
 	/* Alternative: hide text nodes using ::after trick (if you can't modify HTML) */
 	.jump-btn {
 		padding: 0.3rem 0.5rem;
-		font-size: 0; /* Hide text */
-		width: 2.2rem;
+		/* font-size: 0; Hide text */
+		/* width: 2.2rem;
 		height: 2.2rem;
-		justify-content: center;
+		justify-content: center; */
 	}
 
 	.jump-btn i {
@@ -337,7 +348,26 @@ p {
 
 	.pag-count {
 		font-size: 0.75rem;
-		padding: 0 0.25rem;
+		/* padding: 0 0.25rem; */
+	}
+
+	/* Optional: make reader controls scrollable ONLY if absolutely needed */
+	/* Use this as LAST RESORT, not default */
+	.reader-controls {
+		overflow-x: auto;
+		padding-bottom: 0.25rem; /* space for scrollbar hint */
+		-webkit-overflow-scrolling: touch;
+		/* Ensure scrollbar is subtle */
+		scrollbar-width: thin;
+		scrollbar-color: #cfd8dc transparent;
+	}
+
+	.reader-controls::-webkit-scrollbar {
+		height: 3px;
+	}
+	.reader-controls::-webkit-scrollbar-thumb {
+		background: #cfd8dc;
+		border-radius: 3px;
 	}
 }
 
